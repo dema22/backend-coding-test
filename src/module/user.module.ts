@@ -9,4 +9,4 @@ import { User } from 'src/models/user/user.model';
   providers: [UserService],
   controllers: [UserController],
 })
-export class UsersModule {}
+export class UserModule {}
