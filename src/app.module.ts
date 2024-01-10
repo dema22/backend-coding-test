@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from './models/user/user.model';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UserModule } from './module/user.module';
 
 @Module({
   imports: [
+    // Module for user related logic.
+    UserModule,
+    // Sequealize configuration from PostgreSQL
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: 'db',
@@ -15,7 +19,13 @@ import { UserModule } from './module/user.module';
       autoLoadModels: true,
       synchronize: true,
     }),
-    UserModule
-  ]
+    // GraphQLModule configuration
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: 'schema.gql',
+    }),
+  ],
+  // agrego por el momento
+  //providers: [UserResolver],
 })
 export class AppModule {}
