@@ -5,11 +5,11 @@ import { Column, Model, Table } from 'sequelize-typescript';
 @ObjectType()
 @InputType('UserInput')
 export class User extends Model {
-  @Field({ nullable: true })
+  @Field()
   @Column
-  username?: string;
+  username: string;
 
-  @Field({ nullable: true })
+  @Field()
   @Column
   password?: string;
 }

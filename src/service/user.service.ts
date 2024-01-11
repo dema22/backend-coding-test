@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/model/user.models';
-
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class UserService {
@@ -13,8 +13,16 @@ export class UserService {
 
   // Create a user
   async create(userData): Promise<User> {
-    console.log("entro a crear user");
-    const user = new User(userData);
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+
+    // Create a new user with the hashed password
+    const user = new User({
+      username: userData.username,
+      password: hashedPassword
+    });
+
+    // Saved user in db.
     return await user.save();
   }
 
