@@ -26,6 +26,11 @@ export class UserService {
     return await user.save();
   }
 
+  // Find user by username.
+  async getUserByUsername(username: string): Promise<User> {
+    return this.userModel.findOne({ where: { username } });
+  }
+
   // Lest return all user from the DB
   async findAll(): Promise<User[]> {
     console.log("entro a buscar usuarios");
