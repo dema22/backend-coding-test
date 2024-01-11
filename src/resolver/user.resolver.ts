@@ -24,7 +24,7 @@ export class UserResolver {
     async getUserByUsername(@Args('username') username: string) {
       console.log("searching user existence.")
       const user = await this.userService.getUserByUsername(username);
-        
+      console.log(user);
       if (!user) {
         console.log("User not found");
         throw new NotFoundException(`User with username ${username} not found`);
