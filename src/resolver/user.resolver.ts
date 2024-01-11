@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { User } from "src/model/user.models";
+import { User, UserInput } from "src/model/user.models";
 import { UserService } from "src/service/user.service";
 
 @Resolver(of => User)
@@ -10,9 +10,13 @@ export class UserResolver {
 
     @Mutation(returns => User)
     async createUser(
-        @Args('input') userInput: User,
+        @Args('input') userInput: UserInput,
     ): Promise<User> {
-        return await this.userService.create(userInput)
+        try {
+            return await this.userService.create(userInput)
+        } catch (error) {
+            throw new Error("Failed to create user. Please check your input and try again.");
+        }
     }
 
     @Query(() => String)
