@@ -4,9 +4,14 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UserModule } from './module/user.module';
 import { AuthModule } from './module/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    // Agrego config para cargar .env
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     // Agrego AuthModule x el momento
     AuthModule,
     // Module for user related logic.

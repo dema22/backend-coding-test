@@ -15,7 +15,8 @@ export class AuthGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const req = context.getArgByIndex(2).req as Request;
         console.log("Entro a auth guard");
-        console.log(req);
+        //console.log(req);
+        console.log(process.env.JWT_SECRET_KEY);
         const token = this.extractTokenFromHeader(req);
         if (!token) {
             throw new UnauthorizedException("You didnt provided a token.");
@@ -24,12 +25,14 @@ export class AuthGuard implements CanActivate {
             const payload = await this.jwtService.verifyAsync(
                 token,
                 {
-                    secret: 'secret key'
+                    secret: process.env.JWT_SECRET_KEY
                 }
             );
 
             req['user'] = payload;
         } catch {
+            console.log("Error when verifing jwt");
+            console.log(process.env.JWT_SECRET_KEY);
             throw new UnauthorizedException("Error when trying to authenticate the provided user.");
         }
         return true;
