@@ -1,5 +1,7 @@
-import { NotFoundException } from "@nestjs/common";
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { NotFoundException, UseGuards } from "@nestjs/common";
+import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { AuthGuard } from "src/guards/auth.guard";
+import { UserPayload } from "src/interface/user.interface";
 import { User, UserInput } from "src/model/user.models";
 import { UserService } from "src/service/user.service";
 
@@ -33,8 +35,11 @@ export class UserResolver {
       return user;
     }
 
+    @UseGuards(AuthGuard)
     @Query(() => String)
-    sayHello(): string {
-      return 'Hello World!';
+    getSpecialMessage(@Context() context: { req: Request}) : string {
+      const userPayload = (context.req as any).user;
+      console.log(userPayload);
+      return `Hello ${userPayload.username}! This is a protected resource, you can view this message because you have had granted access to the app.`;
     }
 }
