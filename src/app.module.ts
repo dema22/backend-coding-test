@@ -3,9 +3,12 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UserModule } from './module/user.module';
+import { AuthModule } from './module/auth.module';
 
 @Module({
   imports: [
+    // Agrego AuthModule x el momento
+    AuthModule,
     // Module for user related logic.
     UserModule,
     // Sequealize configuration from PostgreSQL
