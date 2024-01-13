@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { User, UserInput } from 'src/model/user.models';
+import { User, UserInput } from '../model/user.models';
 import * as bcrypt from "bcrypt";
 
 @Injectable()
