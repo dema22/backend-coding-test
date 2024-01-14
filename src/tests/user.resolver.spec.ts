@@ -33,10 +33,10 @@ describe('UserResolver', () => {
         SequelizeModule.forFeature([User]),
       ],
       providers: [UserResolver,
-         UserService,
-         { provide: AuthGuard, useClass: MockAuthGuard },
-         { provide: JwtService, useClass: MockJwtService },
-        ],
+        UserService,
+        { provide: AuthGuard, useClass: MockAuthGuard },
+        { provide: JwtService, useClass: MockJwtService },
+      ],
     }).compile();
 
     resolver = module.get<UserResolver>(UserResolver);
@@ -67,11 +67,20 @@ describe('UserResolver', () => {
         username: 'testuser',
         password: 'testpassword',
       };
-  
+
       const errorMessage = 'Failed to create user. Please check your input and try again.';
       jest.spyOn(userService, 'create').mockRejectedValueOnce(new Error(errorMessage));
-  
+
       await expect(resolver.createUser(userInput)).rejects.toThrow(errorMessage);
+    });
+  });
+
+  describe("resolver get special message", () => {
+    it('should return a special message', async () => {
+      // Mock the context with a valid user payload
+      const context = { req: { headers: { authorization: 'Bearer validToken' }, user: { username: 'testUser' } } as any };
+      const result = await resolver.getSpecialMessage(context);
+      expect(result).toEqual(`Hello ${context.req.user.username}! This is a protected resource, you can view this message because you have had granted access to the app.`);
     });
   });
 });
