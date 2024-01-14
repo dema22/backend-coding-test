@@ -6,17 +6,15 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { UserPayload } from 'src/interface/user.interface';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
     constructor(private jwtService: JwtService) { }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        const req = context.getArgByIndex(2).req as Request;
-        console.log("Entro a auth guard");
-        //console.log(req);
-        console.log(process.env.JWT_SECRET_KEY);
+        const ctx = GqlExecutionContext.create(context);
+        const req = ctx.getContext().req as Request;
         const token = this.extractTokenFromHeader(req);
         if (!token) {
             throw new UnauthorizedException("You didnt provided a token.");
@@ -27,12 +25,9 @@ export class AuthGuard implements CanActivate {
                 {
                     secret: process.env.JWT_SECRET_KEY
                 }
-            );
-
+            );       
             req['user'] = payload;
         } catch {
-            console.log("Error when verifing jwt");
-            console.log(process.env.JWT_SECRET_KEY);
             throw new UnauthorizedException("Error when trying to authenticate the provided user.");
         }
         return true;

@@ -34,7 +34,7 @@ describe('UserResolver', () => {
       ],
       providers: [UserResolver,
          UserService,
-         { provide: AuthGuard, useClass: MockAuthGuard }, // Provide the mock AuthGuard
+         { provide: AuthGuard, useClass: MockAuthGuard },
          { provide: JwtService, useClass: MockJwtService },
         ],
     }).compile();
@@ -57,7 +57,6 @@ describe('UserResolver', () => {
       };
 
       jest.spyOn(userService, 'create').mockResolvedValueOnce(createdUser as User);
-
       const result = await resolver.createUser(userInput);
 
       expect(result).toEqual(createdUser);
@@ -70,11 +69,9 @@ describe('UserResolver', () => {
       };
   
       const errorMessage = 'Failed to create user. Please check your input and try again.';
-  
       jest.spyOn(userService, 'create').mockRejectedValueOnce(new Error(errorMessage));
   
-      // You can also use expect().rejects.toThrow() syntax for async functions
-      await expect(resolver.createUser(userInput)).rejects.toThrowError(errorMessage);
+      await expect(resolver.createUser(userInput)).rejects.toThrow(errorMessage);
     });
   });
 });
