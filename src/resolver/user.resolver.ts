@@ -1,4 +1,4 @@
-import { NotFoundException, UseGuards } from "@nestjs/common";
+import { ConflictException, NotFoundException, UseGuards } from "@nestjs/common";
 import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { AuthGuard } from "../guards/auth.guard";
 import { User, UserInput } from "../model/user.models";
@@ -17,21 +17,12 @@ export class UserResolver {
     try {
       return await this.userService.create(userInput)
     } catch (error) {
-      throw new Error("Failed to create user. Please check your input and try again.");
+      if (error instanceof ConflictException) {
+        throw error;
+      }
+      // Rethrow any other unexpected errors
+      throw error;
     }
-  }
-
-  @Query(returns => User)
-  async getUserByUsername(@Args('username') username: string) {
-    console.log("searching user existence.")
-    const user = await this.userService.getUserByUsername(username);
-    console.log(user);
-    if (!user) {
-      console.log("User not found");
-      throw new NotFoundException(`User with username ${username} not found`);
-    }
-
-    return user;
   }
 
   @UseGuards(AuthGuard)
@@ -39,6 +30,6 @@ export class UserResolver {
   getSpecialMessage(@Context() context: { req: Request }): string {
     const userPayload = (context.req as any).user;
     console.log(userPayload);
-    return `Hello ${userPayload.username}! This is a protected resource, you can view this message because you have had granted access to the app.`;
+    return `Hello, ${userPayload.username}! This is a protected resource, you can view this message because you have been granted access to the app.`;
   }
 }

@@ -80,7 +80,7 @@ describe('UserResolver', () => {
       // Mock the context with a valid user payload
       const context = { req: { headers: { authorization: 'Bearer validToken' }, user: { username: 'testUser' } } as any };
       const result = await resolver.getSpecialMessage(context);
-      expect(result).toEqual(`Hello ${context.req.user.username}! This is a protected resource, you can view this message because you have had granted access to the app.`);
+      expect(result).toEqual(`Hello, ${context.req.user.username}! This is a protected resource, you can view this message because you have been granted access to the app.`);
     });
   });
 });
