@@ -38,9 +38,9 @@ describe('AuthGuard', () => {
 
         const gqlMockFactory = (mockRequest: Request): ExecutionContext =>
         ({
-            getType: () => 'graphql',
-            getHandler: () => 'query',
-            getClass: () => 'Test Class',
+            getType: () => ({} as any),
+            getHandler: () => ({} as any),
+            getClass: () => ({} as any),
             getArgs: () => [{}, {}, { req: mockRequest }, {}],
             getArgByIndex: () => ({} as any),
             switchToHttp: () => ({} as any),

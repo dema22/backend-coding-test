@@ -5,7 +5,7 @@ import { User, UserInput } from '../model/user.models';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AuthGuard } from '../guards/auth.guard';
 import { JwtService } from '@nestjs/jwt';
-import { CanActivate, ExecutionContext } from '@nestjs/common';
+import { CanActivate, ConflictException, ExecutionContext } from '@nestjs/common';
 
 class MockAuthGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
@@ -68,8 +68,8 @@ describe('UserResolver', () => {
         password: 'testpassword',
       };
 
-      const errorMessage = 'Failed to create user. Please check your input and try again.';
-      jest.spyOn(userService, 'create').mockRejectedValueOnce(new Error(errorMessage));
+      const errorMessage = 'Username is already taken';
+      jest.spyOn(userService, 'create').mockRejectedValueOnce(new ConflictException(errorMessage));
 
       await expect(resolver.createUser(userInput)).rejects.toThrow(errorMessage);
     });
