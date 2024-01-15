@@ -36,4 +36,4 @@ import { ConfigModule } from '@nestjs/config';
   // agrego por el momento
   //providers: [UserResolver],
 })
-export class AppModule {}
+export class AppModule { }

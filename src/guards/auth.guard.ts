@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
         const req = ctx.getContext().req as Request;
         const token = this.extractTokenFromHeader(req);
         if (!token) {
-            throw new UnauthorizedException("You didnt provided a token.");
+            throw new UnauthorizedException("No token provided.");
         }
         try {
             const payload = await this.jwtService.verifyAsync(
@@ -25,10 +25,10 @@ export class AuthGuard implements CanActivate {
                 {
                     secret: process.env.JWT_SECRET_KEY
                 }
-            );       
+            );
             req['user'] = payload;
         } catch {
-            throw new UnauthorizedException("Error when trying to authenticate the provided user.");
+            throw new UnauthorizedException("Authentication error: Unable to verify the token payload.");
         }
         return true;
     }

@@ -18,14 +18,11 @@ export class User extends Model {
   @AutoIncrement
   @Column
   id?: number;
-  
+
   @Field()
-  @Column({ unique: true})
+  @Column({ unique: true })
   username: string;
 
   @Column
   password?: string;
-
-  // By default, Sequelize automatically adds the attributes createdAt and updatedAt to every model,
-  // using the data type DataTypes.DATE
 }

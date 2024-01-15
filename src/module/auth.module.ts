@@ -16,4 +16,4 @@ import { AuthResolver } from "src/resolver/auth.resolver";
   providers: [AuthResolver, AuthService],
   exports: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }

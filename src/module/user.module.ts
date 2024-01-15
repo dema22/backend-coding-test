@@ -7,7 +7,6 @@ import { UserResolver } from 'src/resolver/user.resolver';
 @Module({
   imports: [SequelizeModule.forFeature([User])],
   providers: [UserResolver, UserService],
-  // Agrego
   exports: [UserService]
 })
-export class UserModule {}
+export class UserModule { }

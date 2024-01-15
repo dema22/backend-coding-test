@@ -9,10 +9,10 @@ export class UserService {
   constructor(
     @InjectModel(User)
     private readonly userModel: typeof User,
-  ) {}
+  ) { }
 
   // Create a user
-  async create(userInput : UserInput): Promise<User> {
+  async create(userInput: UserInput): Promise<User> {
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(userInput.password, 10);
 
