@@ -2,6 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User, UserInput } from '../model/user.models';
 import * as bcrypt from "bcrypt";
+import { handleDatabaseError } from '../utils/error.handling.utils';
 
 @Injectable()
 export class UserService {
@@ -26,10 +27,11 @@ export class UserService {
       // Saved user in db.
       return await user.save();
     } catch (error) {
-      if (error.name === 'SequelizeUniqueConstraintError') {
-        // Handle unique constraint violation (e.g., duplicate username)
-        throw new ConflictException('Username is already taken');
+      const handledError = handleDatabaseError(error);
+      if (handledError) {
+        throw handledError;
       }
+
       throw error;
     }
   }
