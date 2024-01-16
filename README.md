@@ -11,7 +11,7 @@ In order to run the app, you will need:
 ```
 # How to Running The App
 
-1. cd into the coding_test
+1. cd into the backend-coding-test
 2. Create a .env file to tell Docker the environment variables we need.
 3. Set a variable name 'JWT_SECRET_KEY' in the .env file, this should be a 50 character string literal, randomly generated.
 5. Do `docker-compose up`
