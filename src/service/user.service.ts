@@ -1,6 +1,6 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { User, UserInput } from '../model/user.models';
+import { User } from '../model/user.models';
 import * as bcrypt from "bcrypt";
 import { handleDatabaseError } from '../utils/error.handling.utils';
 
@@ -12,15 +12,15 @@ export class UserService {
     private readonly userModel: typeof User,
   ) { }
 
-  // Create a user
-  async create(userInput: UserInput): Promise<User> {
+
+  async create(username: string, password: string): Promise<User> {
     try {
       // Hash the password before saving
-      const hashedPassword = await bcrypt.hash(userInput.password, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
 
       // Create a new user with the hashed password
       const user = new User({
-        username: userInput.username,
+        username: username,
         password: hashedPassword
       });
 
@@ -36,7 +36,7 @@ export class UserService {
     }
   }
 
-  // Find user by username.
+
   async getUserByUsername(username: string): Promise<User> {
     return this.userModel.findOne({ where: { username } });
   }

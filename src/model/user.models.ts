@@ -1,14 +1,5 @@
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { AutoIncrement, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-
-@InputType('UserInput')
-export class UserInput {
-  @Field()
-  username: string;
-
-  @Field()
-  password?: string;
-}
+import { Field, ObjectType } from '@nestjs/graphql';
+import { AutoIncrement, Column, Model, PrimaryKey, Table } from 'sequelize-typescript';
 
 @Table
 @ObjectType()

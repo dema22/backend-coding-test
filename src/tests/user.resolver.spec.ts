@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from '../service/user.service';
 import { UserResolver } from '../resolver/user.resolver';
-import { User, UserInput } from '../model/user.models';
+import { User } from '../model/user.models';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AuthGuard } from '../guards/auth.guard';
 import { JwtService } from '@nestjs/jwt';
@@ -45,11 +45,6 @@ describe('UserResolver', () => {
 
   describe('createUser', () => {
     it('should create a user successfully', async () => {
-      const userInput: UserInput = {
-        username: 'testuser',
-        password: 'testpassword',
-      };
-
       const createdUser: Partial<User> = {
         id: 1,
         username: 'testuser',
@@ -57,27 +52,21 @@ describe('UserResolver', () => {
       };
 
       jest.spyOn(userService, 'create').mockResolvedValueOnce(createdUser as User);
-      const result = await resolver.createUser(userInput);
+      const result = await resolver.createUser('testuser', 'testpassword');
 
       expect(result).toEqual(createdUser);
     });
 
     it('should handle an error when creating a user', async () => {
-      const userInput: UserInput = {
-        username: 'testuser',
-        password: 'testpassword',
-      };
-
       const errorMessage = 'Username is already taken';
       jest.spyOn(userService, 'create').mockRejectedValueOnce(new ConflictException(errorMessage));
 
-      await expect(resolver.createUser(userInput)).rejects.toThrow(errorMessage);
+      await expect(resolver.createUser('testuser', 'testpassword')).rejects.toThrow(errorMessage);
     });
   });
 
-  describe("resolver get special message", () => {
+  describe("get special message", () => {
     it('should return a special message', async () => {
-      // Mock the context with a valid user payload
       const context = { req: { headers: { authorization: 'Bearer validToken' }, user: { username: 'testUser' } } as any };
       const result = await resolver.getSpecialMessage(context);
       expect(result).toEqual(`Hello, ${context.req.user.username}! This is a protected resource, you can view this message because you have been granted access to the app.`);

@@ -8,13 +8,10 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    // Agrego config para cargar .env
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    // Agrego AuthModule x el momento
     AuthModule,
-    // Module for user related logic.
     UserModule,
     // Sequealize configuration from PostgreSQL
     SequelizeModule.forRoot({
@@ -33,7 +30,5 @@ import { ConfigModule } from '@nestjs/config';
       autoSchemaFile: 'schema.gql',
     }),
   ],
-  // agrego por el momento
-  //providers: [UserResolver],
 })
 export class AppModule { }

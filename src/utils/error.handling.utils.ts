@@ -5,6 +5,6 @@ export function handleDatabaseError(error: any): ConflictException | null {
         const customMessage = 'Username is already taken';
         return new ConflictException(customMessage);
     }
-    // If the error is not recognized, return null
+    
     return null;
 }

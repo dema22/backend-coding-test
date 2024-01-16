@@ -1,5 +1,8 @@
 # Coding Test
 
+![Alt text](image.png)
+
+
 # Pre-Requisites
 
 In order to run the app, you will need:
@@ -21,7 +24,7 @@ You can enter http://localhost:3000/graphql, and use the following code snippets
 
 ```
 mutation {
-  createUser(input: { username: "testusername", password: "testpassword"}) {
+  createUser(username: "testusername", password: "testpassword") {
     username
   }
 }

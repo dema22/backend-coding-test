@@ -1,7 +1,7 @@
-import { ConflictException, NotFoundException, UseGuards } from "@nestjs/common";
+import { UseGuards } from "@nestjs/common";
 import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { AuthGuard } from "../guards/auth.guard";
-import { User, UserInput } from "../model/user.models";
+import { User } from "../model/user.models";
 import { UserService } from "../service/user.service";
 
 @Resolver(of => User)
@@ -10,12 +10,12 @@ export class UserResolver {
     private userService: UserService
   ) { }
 
-  @Mutation(returns => User)
+  @Mutation(() => User)
   async createUser(
-    @Args('input') userInput: UserInput,
+    @Args('username') username: string, @Args('password') password: string,
   ): Promise<User> {
     try {
-      return await this.userService.create(userInput)
+      return await this.userService.create(username, password);
     } catch (error) {
       throw error;
     }
