@@ -1,73 +1,87 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Coding Test
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Pre-Requisites
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+In order to run the app, you will need:
 
-## Description
+  Docker-compose
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# How to Running The App
 
-## Installation
+1. cd into the coding_test
+2. Create a .env file to tell Docker the environment variables we need.
+3. Set a variable name 'JWT_SECRET_KEY' in the .env file, this should be a 50 character string literal, randomly generated.
+5. Do docker-compose up
 
-```bash
-$ pnpm install
+# varsettings.env format:
+	JWT_SECRET_KEY=<VALUE_FOR_JWT_SECRET_KEY>
+
+# Security Considerations:
+
+The coding exercise didnt have specific requirements on who to handle the authentication so I didnt think it was necessary to implement a refresh token.
+This proyects only issue a access token with a long expiration time of 24 hours.
+In a real-world application, we need to refactor this code to issue a access token with a much shorter expriration time, and use refresh tokens so our users can get a new access token.
+
+# Running Tests:
+Just run pnpm run tests.
+
+# Designg Exercises
+
+# 1) Folder structure:
+
+When running nest new myApp, nest will provide us with a very basic folder structure, like this:
+
+```
+  node_modules
+  src
+    app.controller.ts
+    app.module.ts
+    app.service.ts
+    main.ts
+  nest-cli.json
+  package.json
+  tsconfig.json
+  .eslintrc.js
 ```
 
-## Running the app
+Nest is not very opinionated on the way you should structure your project. It's as minimalistic as it gets, consisting of just a simple controller, module, service, and main file. It is very important to organize our code better for various reasons:
 
-```bash
-# development
-$ pnpm run start
+  * A structured project layout is crucial for scalability. As the project expands, having a predefined and scalable structure allows for easy integration of new features and components.
 
-# watch mode
-$ pnpm run start:dev
+  * From maintability, its easeir to maintan, update and extend a project when files are loggically organized.
+  Future team member can quickly get up to speed on the proyect.
 
-# production mode
-$ pnpm run start:prod
-```
+  * For Collaboration, when multiple team members are wokring on the same proyect, a consisten folder structure facilitates collaboration.
 
-## Test
+  * Build tools and scripts can be configured more easily when files are located predictably.
 
-```bash
-# unit tests
-$ pnpm run test
+  * As projects grow, navigating through the codebase becomes more critical. A clear folder structure reduces the time it takes to locate specific files or modules.
 
-# e2e tests
-$ pnpm run test:e2e
+<div align="justify">
+I will most likely organize folders following the concept of separation of concerns. I will place the controllers file in a 'controllers' folder, where I will handle incoming requests. 
 
-# test coverage
-$ pnpm run test:cov
-```
+A 'service' folder will contain all the business logic of my application where I can perform some kind of computation on the data or apply any logic to it.
 
-## Support
+Following that, a 'repository' or data access layer will be created, where I can access the database for retrieval, creation, or updating of information.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+We can also include a 'models' folder, it contains the data models or classes that represent the structure of our application's data. In the context of a database, each model may correspond to a table.
+Additionally, there can be folders such as 'types/interfaces' to store type definitions and interfaces that help in defining contracts. 
 
-## Stay in touch
+Also, we can have a 'DTO' folder, DTOs are objects that carry data between different parts of your application, often between the client and server. 
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+'Utils' folder, to store utility functions or helper modules that provide generic functionality used across different parts of our application.
 
-## License
+I can also have a folder to hold the unit testing or e2e tests, or whatever kind of test I want to add to my application.
+</div>
 
-Nest is [MIT licensed](LICENSE).
+# 2) ORM:
+
+<div align="justify">
+If my project needs to interact with both a relational and a non-relational database, I would probably use two different ORMs, like Sequelize and Mongoose. Sequelize is a great tool that supports multiple RDBMS, such as MySQL, PostgreSQL, SQLite, and MSSQL. It provides built-in data validation for data types and constraints, helping ensure that the data being saved to the database meets the defined criteria. It also includes a migration system, allowing us to version-control our database schema. Additionally, it is straightforward to create associations between tables and perform queries. Sequelize also supports hooks and lifecycle events, enabling us to execute custom code at various stages of the ORM operations.
+
+On the other hand, Mongoose also lets us define schemas to specify the shape of our data, including data types, default values, and validation rules. It has built-in validation for the data, and we can execute middleware to perform custom logic before or after specific operations. Mongoose also provides a query API, allowing us to construct complex queries.
+
+There is a third option, which is TypeORM, an ORM that supports both relational and non-relational databases. It can be a good option if we are building an MVP, and we have some serious time constraints. This tool can help us develop faster, and team members on our project will only need to learn one tool instead of the two original tools I proposed. 
+
+I still prefer my original choice to have two different ORMS, so we can have more flexibility and use tools that has been developed for each use cases.
+</div>
