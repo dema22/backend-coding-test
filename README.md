@@ -54,7 +54,7 @@ You can also go to http://localhost:5050 and use the credentials (email: admin@a
 # Some Security Considerations:
 
 This project only issues an access token with a long expiration time of 24 hours.
-In a production environment, we need to refactor this code to issue a access token with a much shorter expriration time, and use refresh tokens so our users can get a new access token.
+In a production environment, we need to refactor this code to issue a access token with a much shorter expiration time, and use refresh tokens so our users can get a new access token.
 
 There are also some hardcoded values in the Docker Compose, such as the database password. I left them for this proof of concept, but in a real productive environment, they will be securely stored in an environment file. We will never expose that kind of information to ensure the security of our application.
 
@@ -105,7 +105,7 @@ Additionally, there can be folders such as 'types/interfaces' to store type defi
 
 'Utils' folder, to store utility functions or helper modules that provide generic functionality used across different parts of our application.
 
-I also have a folder to hold different tests, form unit testing , to e2e tests, to integration tests.
+I also have a folder to hold different tests, from unit testing , to e2e tests, to integration tests.
 </div>
 
 # 2) ORM:
