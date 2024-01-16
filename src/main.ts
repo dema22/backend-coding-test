@@ -4,7 +4,6 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   // Load environment variables early in the application startup
   require('dotenv').config();
-  console.log(process.env.JWT_SECRET_KEY);
   const app = await NestFactory.create(AppModule);
   await app.listen(3000);
 }

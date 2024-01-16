@@ -48,10 +48,12 @@ Remember to put the Authorizadion token you get from the log in mutation:
 
 You can also go to http://localhost:5050 and use the credentials (email: admin@admin.com and pass: pgadmin4) to enter the pgAdmin GUI, and see how the user is stored in the database.
 
-# Security Considerations:
+# Some Security Considerations:
 
 This project only issues an access token with a long expiration time of 24 hours.
 In a production environment, we need to refactor this code to issue a access token with a much shorter expriration time, and use refresh tokens so our users can get a new access token.
+
+There are also some hardcoded values in the Docker Compose, such as the database password. I left them for this proof of concept, but in a real productive environment, they will be securely stored in an environment file. We will never expose that kind of information to ensure the security of our application.
 
 # Running Tests:
 Just run `pnpm run tests`
