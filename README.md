@@ -3,17 +3,17 @@
 # Pre-Requisites
 
 In order to run the app, you will need:
-
+```
   Docker-compose
-
+```
 # How to Running The App
 
 1. cd into the coding_test
 2. Create a .env file to tell Docker the environment variables we need.
 3. Set a variable name 'JWT_SECRET_KEY' in the .env file, this should be a 50 character string literal, randomly generated.
-5. Do docker-compose up
+5. Do `docker-compose up`
 
-# varsettings.env format:
+# .env format:
 	JWT_SECRET_KEY=<VALUE_FOR_JWT_SECRET_KEY>
 
 # Ready to go:
@@ -50,14 +50,13 @@ You can also go to http://localhost:5050 and use the credentials (email: admin@a
 
 # Security Considerations:
 
-The coding exercise didnt have specific requirements on who to handle the authentication so I didnt think it was necessary to implement a refresh token.
-This proyects only issue a access token with a long expiration time of 24 hours.
-In a real-world application, we need to refactor this code to issue a access token with a much shorter expriration time, and use refresh tokens so our users can get a new access token.
+This project only issues an access token with a long expiration time of 24 hours.
+In a production environment, we need to refactor this code to issue a access token with a much shorter expriration time, and use refresh tokens so our users can get a new access token.
 
 # Running Tests:
-Just run pnpm run tests.
+Just run `pnpm run tests`
 
-# Designg Exercises
+# Design Exercises
 
 # 1) Folder structure:
 
@@ -80,40 +79,40 @@ Nest is not very opinionated on the way you should structure your project. It's 
 
   * A structured project layout is crucial for scalability. As the project expands, having a predefined and scalable structure allows for easy integration of new features and components.
 
-  * From maintability, its easeir to maintan, update and extend a project when files are loggically organized.
-  Future team member can quickly get up to speed on the proyect.
+  * From maintainability, its easier to maintain, update and extend a project when files are logically organized.
+  Future team members can quickly get up to speed on the project.
 
-  * For Collaboration, when multiple team members are wokring on the same proyect, a consisten folder structure facilitates collaboration.
+  * For Collaboration, when multiple team members are working on the same proyect, a consistent folder structure facilitates collaboration.
 
   * Build tools and scripts can be configured more easily when files are located predictably.
 
-  * As projects grow, navigating through the codebase becomes more critical. A clear folder structure reduces the time it takes to locate specific files or modules.
+  * As projects grow, navigating through the codebase becomes more difficult. A clear folder structure reduces the time it takes to locate specific files or modules.
 
 <div align="justify">
 I will most likely organize folders following the concept of separation of concerns. I will place the controllers file in a 'controllers' folder, where I will handle incoming requests. 
 
 A 'service' folder will contain all the business logic of my application where I can perform some kind of computation on the data or apply any logic to it.
 
-Following that, a 'repository' or data access layer will be created, where I can access the database for retrieval, creation, or updating of information.
+Following that, a 'repository' or data access layer will be created, where I can access the database for any CRUD operations.
 
 We can also include a 'models' folder, it contains the data models or classes that represent the structure of our application's data. In the context of a database, each model may correspond to a table.
-Additionally, there can be folders such as 'types/interfaces' to store type definitions and interfaces that help in defining contracts. 
-
-Also, we can have a 'DTO' folder, DTOs are objects that carry data between different parts of your application, often between the client and server. 
+Additionally, there can be folders such as 'types/interfaces' to store type definitions and interfaces.
 
 'Utils' folder, to store utility functions or helper modules that provide generic functionality used across different parts of our application.
 
-I can also have a folder to hold the unit testing or e2e tests, or whatever kind of test I want to add to my application.
+I also have a folder to hold different tests, form unit testing , to e2e tests, to integration tests.
 </div>
 
 # 2) ORM:
 
 <div align="justify">
-If my project needs to interact with both a relational and a non-relational database, I would probably use two different ORMs, like Sequelize and Mongoose. Sequelize is a great tool that supports multiple RDBMS, such as MySQL, PostgreSQL, SQLite, and MSSQL. It provides built-in data validation for data types and constraints, helping ensure that the data being saved to the database meets the defined criteria. It also includes a migration system, allowing us to version-control our database schema. Additionally, it is straightforward to create associations between tables and perform queries. Sequelize also supports hooks and lifecycle events, enabling us to execute custom code at various stages of the ORM operations.
+If my project needs to interact with both a relational and a non-relational database, I would probably use two different tools, like the Sequelize  ORM and Mongoose ODM.
 
-On the other hand, Mongoose also lets us define schemas to specify the shape of our data, including data types, default values, and validation rules. It has built-in validation for the data, and we can execute middleware to perform custom logic before or after specific operations. Mongoose also provides a query API, allowing us to construct complex queries.
+Sequelize is a great tool that supports multiple RDBMS, such as MySQL, PostgreSQL, SQLite, and MSSQL. It provides built-in data validation for data types and constraints, helping ensure that the data being saved to the database meets the defined criteria. It also includes a migration system, allowing us to version-control our database schema. Additionally, it is straightforward to create associations between tables and perform queries. Sequelize also supports hooks and lifecycle events, enabling us to execute custom code at various stages of the ORM operations.
 
-There is a third option, which is TypeORM, an ORM that supports both relational and non-relational databases. It can be a good option if we are building an MVP, and we have some serious time constraints. This tool can help us develop faster, and team members on our project will only need to learn one tool instead of the two original tools I proposed. 
+On the other hand, Mongoose lets us define schemas to specify the shape of our data, including data types, default values, and validation rules. It has built-in validation for the data, and we can execute middleware to perform custom logic before or after specific operations. Mongoose also provides a query API, allowing us to construct complex queries.
 
-I still prefer my original choice to have two different ORMS, so we can have more flexibility and use tools that has been developed for each use cases.
+There is a third option, which is TypeORM, an ORM that supports both relational and non-relational databases. It can be a good option if we are building an MVP, and we have some serious time constraints. This tool can help us develop faster, and team members on our project will only need to learn one tool instead of the two original tools I proposed. The trade-off its that you will increase coupling in the application because you are using the same tool for two different paradigms, so you can lose some flexibility.
+
+I still prefer my original choice to have two different tools, so we can have more flexibility and use solutions that have been developed for each use cases.
 </div>

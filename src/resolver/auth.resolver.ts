@@ -9,7 +9,6 @@ export class AuthResolver {
   async login(@Args('username') username: string, @Args('password') password: string): Promise<{ access_token: string }> {
     try {
       const result = await this.authService.logIn(username, password);
-      console.log(result);
       return result;
     } catch (error) {
       throw error;

@@ -17,10 +17,6 @@ export class UserResolver {
     try {
       return await this.userService.create(userInput)
     } catch (error) {
-      if (error instanceof ConflictException) {
-        throw error;
-      }
-      // Rethrow any other unexpected errors
       throw error;
     }
   }
@@ -29,7 +25,6 @@ export class UserResolver {
   @Query(() => String)
   getSpecialMessage(@Context() context: { req: Request }): string {
     const userPayload = (context.req as any).user;
-    console.log(userPayload);
     return `Hello, ${userPayload.username}! This is a protected resource, you can view this message because you have been granted access to the app.`;
   }
 }
