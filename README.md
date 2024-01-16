@@ -16,6 +16,38 @@ In order to run the app, you will need:
 # varsettings.env format:
 	JWT_SECRET_KEY=<VALUE_FOR_JWT_SECRET_KEY>
 
+# Ready to go:
+You can enter http://localhost:3000/graphql, and use the following code snippets to consume the GraphQL API:
+
+```
+mutation {
+  createUser(input: { username: "testusername", password: "testpassword"}) {
+    username
+  }
+}
+```
+
+```
+mutation {
+  login(username: "testusername", password: "testpassword") {
+    access_token
+  }
+}
+```
+
+```
+query {
+  getSpecialMessage
+}
+
+Remember to put the Authorizadion token you get from the log in mutation:
+{
+  "Authorization": "Bearer access_token"
+}
+```
+
+You can also go to http://localhost:5050 and use the credentials (email: admin@admin.com and pass: pgadmin4) to enter the pgAdmin GUI, and see how the user is stored in the database.
+
 # Security Considerations:
 
 The coding exercise didnt have specific requirements on who to handle the authentication so I didnt think it was necessary to implement a refresh token.
